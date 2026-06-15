@@ -3,15 +3,15 @@ import os
 
 # PostgreSQL 데이터베이스 설정
 DB_CONFIG = {
-    "host": "10.1.55.226",
-    "database": "lhw_llm",
-    "user": "dlit",
-    "password": "*Dlit7004#",
+    "host": "",
+    "database": "",
+    "user": "",
+    "password": "",
     "port": 5432
 }
 
 # 1. LiteLLM 게이트웨이 엔드포인트 설정
-LITELLM_BASE_URL = "http://10.1.55.226/v1"
+LITELLM_BASE_URL = "http://localhost/v1"
 HARRIER_EMBEDDING_URL = f"{LITELLM_BASE_URL}/embeddings"
 LITELLM_VLM_URL = f"{LITELLM_BASE_URL}/chat/completions"
 
