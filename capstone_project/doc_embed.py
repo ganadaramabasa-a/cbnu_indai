@@ -35,6 +35,8 @@ OCR_PAGE_TEXT_BUFFER: List[str] = []
 class RemotePaddleOcrOptions(OcrOptions):
     kind: ClassVar[Literal['remote_paddle_ocr']] = 'remote_paddle_ocr'
     lang: List[str] = ['ko', 'en']
+    api_url: str = os.getenv('OCR_API_URL', 'http://10.1.55.226:30000/v1/chat/completions')
+    # api_url: str = 'http://10.1.55.226:30273/v1/chat/completions'
     model: str = os.getenv('OCR_MODEL_NAME', 'paddleocr-vl')
     api_key: str = os.getenv('OCR_API_KEY', 'EMPTY')
     prompt: str = os.getenv(
@@ -439,12 +441,17 @@ def register_remote_paddle_ocr() -> None:
 # =======================
 DB_CONFIG = {    
     'dbname': 'lhw_llm',
+    'user': 'dlit',
+    'password': '*Dlit7004#',
+    'host': '10.1.55.226',
+    'port': 5432
 }
 
 # CONNECTION_STRING = f'postgresql+psycopg2://{DB_CONFIG["DB_USER"]}:{DB_CONFIG["DB_PASSWORD"]}@{DB_CONFIG["DB_HOST"]}:{DB_CONFIG["DB_PORT"]}/{DB_CONFIG["DB_NAME"]}'
 
 # 임베딩 모델
 EMBED_MODEL_NAME = 'bge-m3'
+EMBED_API_URL = 'http://10.1.55.226:30000/v1/embeddings'
 
 
 # 파일 정보 등록

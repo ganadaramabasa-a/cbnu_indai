@@ -10,8 +10,13 @@ import requests
 
 DB_CONFIG = {
     'dbname': os.getenv('DB_NAME', 'lhw_llm'),
+    'user': os.getenv('DB_USER', 'dlit'),
+    'password': os.getenv('DB_PASSWORD', '*Dlit7004#'),
+    'host': os.getenv('DB_HOST', '10.1.55.226'),
+    'port': int(os.getenv('DB_PORT', '5432')),
 }
 
+API_BASE_URL = os.getenv('API_BASE_URL', 'http://10.1.55.226:30000/v1')
 EMBED_MODEL_NAME = os.getenv('EMBED_MODEL_NAME', 'bge-m3')
 EMBED_API_URL = os.getenv('EMBED_API_URL', f'{API_BASE_URL}/embeddings')
 LLM_MODEL_NAME = os.getenv('LLM_MODEL_NAME', 'gemma-4-26b-a4b-it')
