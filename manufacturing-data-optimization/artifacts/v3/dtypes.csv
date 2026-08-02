@@ -1,0 +1,14 @@
+,0
+Job_ID,str
+Machine_ID,str
+Operation_Type,str
+Material_Used,float64
+Processing_Time,int64
+Energy_Consumption,float64
+Machine_Availability,int64
+Scheduled_Start,str
+Scheduled_End,str
+Actual_Start,str
+Actual_End,str
+Job_Status,str
+Optimization_Category,str

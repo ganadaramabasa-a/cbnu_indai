@@ -1,0 +1,14 @@
+,0
+Job_ID,1000
+Machine_ID,5
+Operation_Type,5
+Material_Used,362
+Processing_Time,101
+Energy_Consumption,702
+Machine_Availability,20
+Scheduled_Start,1000
+Scheduled_End,955
+Actual_Start,851
+Actual_End,834
+Job_Status,3
+Optimization_Category,4

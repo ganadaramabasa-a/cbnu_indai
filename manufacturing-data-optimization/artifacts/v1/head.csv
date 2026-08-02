@@ -1,0 +1,11 @@
+Job_ID,Machine_ID,Operation_Type,Material_Used,Processing_Time,Energy_Consumption,Machine_Availability,Scheduled_Start,Scheduled_End,Actual_Start,Actual_End,Job_Status,Optimization_Category
+J001,M01,Grinding,3.17,76,11.42,96,2023-03-18 08:00:00,2023-03-18 09:16:00,2023-03-18 08:05:00,2023-03-18 09:21:00,Completed,Moderate Efficiency
+J002,M01,Grinding,3.35,79,6.61,84,2023-03-18 08:10:00,2023-03-18 09:29:00,2023-03-18 08:20:00,2023-03-18 09:39:00,Delayed,Low Efficiency
+J003,M04,Additive,2.29,56,11.11,92,2023-03-18 08:20:00,2023-03-18 09:16:00,,,Failed,Low Efficiency
+J004,M04,Grinding,1.76,106,12.5,95,2023-03-18 08:30:00,2023-03-18 10:16:00,2023-03-18 08:35:00,2023-03-18 10:21:00,Completed,Moderate Efficiency
+J005,M01,Lathe,1.9,46,8.13,88,2023-03-18 08:40:00,2023-03-18 09:26:00,2023-03-18 08:42:00,2023-03-18 09:28:00,Completed,High Efficiency
+J006,M02,Additive,4.86,100,13.83,86,2023-03-18 08:50:00,2023-03-18 10:30:00,2023-03-18 08:53:00,2023-03-18 10:33:00,Completed,Moderate Efficiency
+J007,M04,Milling,4.67,22,14.2,87,2023-03-18 09:00:00,2023-03-18 09:22:00,2023-03-18 09:04:00,2023-03-18 09:26:00,Completed,Moderate Efficiency
+J008,M05,Grinding,1.57,79,13.86,91,2023-03-18 09:10:00,2023-03-18 10:29:00,2023-03-18 09:08:00,2023-03-18 10:27:00,Completed,Low Efficiency
+J009,M02,Drilling,3.49,42,8.97,81,2023-03-18 09:20:00,2023-03-18 10:02:00,2023-03-18 09:23:00,2023-03-18 10:05:00,Completed,Moderate Efficiency
+J010,M01,Drilling,2.1,27,3.66,97,2023-03-18 09:30:00,2023-03-18 09:57:00,2023-03-18 09:54:00,2023-03-18 10:21:00,Delayed,Low Efficiency

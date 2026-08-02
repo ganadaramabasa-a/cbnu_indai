@@ -1,0 +1,6 @@
+train_shape: (800, 24)
+test_shape: (200, 24)
+cv_f1_mean: 1.0
+test_accuracy: 1.0
+test_f1: 1.0
+test_roc_auc: 1.0
