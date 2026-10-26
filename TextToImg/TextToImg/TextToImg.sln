@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextToImg", "TextToImg\TextToImg.csproj", "{EB72F73F-4FA3-4B4D-82F3-9ACA0764F8A6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB72F73F-4FA3-4B4D-82F3-9ACA0764F8A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB72F73F-4FA3-4B4D-82F3-9ACA0764F8A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB72F73F-4FA3-4B4D-82F3-9ACA0764F8A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB72F73F-4FA3-4B4D-82F3-9ACA0764F8A6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {289ECFA6-C714-452A-9AB7-F8898F6D493E}
+	EndGlobalSection
+EndGlobal

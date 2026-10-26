@@ -1,0 +1,10 @@
+# Visual Studio / .NET 빌드 산출물
+bin/
+obj/
+packages/
+.vs/
+*.user
+*.suo
+
+# ML.NET Model Builder 학습 결과 (직접 재학습해서 생성)
+MLModel*.zip

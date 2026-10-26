@@ -11,6 +11,7 @@
 - [예지보전·제조 데이터](#예지보전제조-데이터)
 - [시계열 예측](#시계열-예측)
 - [애플리케이션](#애플리케이션)
+- [C# / .NET 도구](#c--net-도구)
 - [실행 시 참고사항](#실행-시-참고사항)
 
 ## 폴더 구성
@@ -33,6 +34,10 @@
 | [`project_bank/`](project_bank) | 은행 입출금 웹앱 | Flask |
 | [`React/reactgrid-study/`](React/reactgrid-study) | ReactGrid 학습 | React, TypeScript, Vite |
 | [`SinglePrompter/`](SinglePrompter) | 음성 인식 프롬프터 안드로이드 앱 | Kotlin, Jetpack Compose |
+| [`DevGridAPI/`](DevGridAPI) | 상품 리뷰 감성 분류 모델 + 공공데이터 API 그리드 | ML.NET, ASP.NET Core, DevExpress |
+| [`TextToImg/`](TextToImg) | 웨이퍼 맵(칩 상태 코드) 이미지 생성 | C# WinForms, GDI+ |
+| [`ImgCrop/`](ImgCrop) | 이미지 영역 선택·잘라내기·붙여넣기 도구 | C# WinForms, GDI+ |
+| [`SendImageViaPost/`](SendImageViaPost) | OCR(Text Spotting) 추론 서버에 이미지 전송 | C# WinForms, HttpClient |
 
 ---
 
@@ -261,14 +266,55 @@ npm run dev
 
 ---
 
+## C# / .NET 도구
+
+모두 Visual Studio 솔루션(`.sln`)으로 열어 실행합니다. `bin/`, `obj/`, `packages/`는 저장소에 없으므로 처음 빌드할 때 NuGet 패키지 복원이 필요합니다.
+
+### `DevGridAPI/` — 상품 리뷰 감성 분류 (ML.NET)
+ML.NET Model Builder로 상품 리뷰 문장의 감성(`sensitivity`)을 분류하는 모델을 만들고, 같은 모델을 세 가지 방식으로 사용합니다.
+
+| 프로젝트 | 내용 |
+|---|---|
+| `DevGridAPI/` (WinForms, .NET Framework 4.7.2) | 모델 학습 코드와 KOSIS 공공데이터 OpenAPI(JSON)를 DevExpress 그리드에 바인딩하는 예제 |
+| `MLModel1_ConsoleApp1/` (.NET 5) | 샘플 리뷰 한 건을 예측해 출력하는 콘솔 앱 |
+| `MLModel1_WebApi1/` (.NET 5) | `POST /predict`로 JSON 입력을 받아 예측 결과를 돌려주는 Web API |
+
+- **파이프라인** (`MLModel1.training.cs`): `FeaturizeText`(리뷰 문장) → `NormalizeMinMax` → `LbfgsMaximumEntropy` 다중 분류
+- **모델 탐색** (`MLModel1.mbconfig`): 60초 AutoML 탐색에서 SdcaMaximumEntropy(0.645)보다 LbfgsMaximumEntropy(0.773)가 높은 점수를 얻어 선택
+- **입력 컬럼**: 리뷰 문장, 상품 카테고리, 브랜드, 가격·품질·편의성·안전·디자인·서비스 언급 여부
+
+```bash
+cd DevGridAPI/MLModel1_WebApi1
+dotnet run
+curl -X POST http://localhost:5000/predict -H "Content-Type: application/json" -d "{\"Rv_sentence\":\"제품은 좋은데 배송이 느려요\"}"
+```
+
+학습된 모델(`MLModel1.zip`)에는 학습 데이터의 단어 사전이 포함되어 있어 저장소에서 제외했습니다. Model Builder에서 `MLModel1.mbconfig`를 열고 같은 컬럼 구조의 리뷰 데이터를 연결해 다시 학습하면 생성됩니다.
+KOSIS 예제는 환경변수 `KOSIS_API_KEY`, `KOSIS_USER_STATS_ID`를 설정해야 동작합니다.
+
+### `TextToImg/` — 웨이퍼 맵 이미지 생성
+웨이퍼 번호·행 번호·칩 상태 코드 문자열(`"010"`, `"211"` 등)을 그리드에 넣고, 코드별 색(0 흰색, 1 빨강, 2 파랑, 3 검정)으로 칸을 그려 PNG 이미지(`wafer_map.png`)로 저장합니다. 반도체 검사 결과를 시각화하기 위한 실험입니다.
+
+### `ImgCrop/` — 이미지 영역 선택·잘라내기
+`PictureBox` 위에서 마우스로 사각형 영역을 드래그해 선택하고, 선택 영역을 복사·잘라내기하거나 클립보드 이미지를 가운데/늘이기 방식으로 붙여넣습니다.
+`SizeMode`(Normal, Stretch, Zoom 등)가 바뀌어도 화면 좌표를 원본 이미지 좌표로 변환(`ConvertCoordinates`)해 정확한 영역을 잘라냅니다. 비전 모델 학습용 이미지에서 관심 영역을 잘라낼 때 사용합니다.
+
+### `SendImageViaPost/` — OCR 추론 서버 클라이언트
+이미지 파일을 선택하면 Base64로 인코딩해 `{"image": "..."}` JSON으로 OCR(Text Spotting) 서버에 POST 요청을 보냅니다.
+서버 주소는 환경변수 `OCR_SERVER_URL`로 지정하고, 없으면 `http://localhost:5013/textSpotting2`를 사용합니다.
+
+---
+
 ## 실행 시 참고사항
 
 - **Python 환경**: 대부분 Python 3.10 기준입니다. 저장소 전체를 아우르는 `requirements.txt`는 없으므로 프로젝트별로 필요한 패키지를 설치하세요.
   주로 쓰는 패키지는 `torch`, `torchvision`, `tensorflow`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `seaborn`, `librosa`, `anomalib`입니다.
 - **작업 디렉터리**: 대부분의 스크립트가 상대 경로로 데이터를 읽으므로 **해당 프로젝트 폴더로 이동한 뒤** 실행하세요.
 - **한글 폰트**: 시각화 코드 일부가 `Malgun Gothic` 폰트를 사용하므로 Windows가 아닌 환경에서는 폰트 설정을 바꿔야 합니다.
-- **저장소에 없는 데이터**: Credit Card Fraud(`card_pattern`), `cromate` 이미지, `anomalib`의 `hazelnut_toy`, 가정용 전력 데이터(`elec_power_pred`)는 직접 준비해야 합니다.
+- **저장소에 없는 데이터**: Credit Card Fraud(`card_pattern`), `cromate` 이미지, `anomalib`의 `hazelnut_toy`, 가정용 전력 데이터(`elec_power_pred`), 리뷰 감성 분류 학습 데이터와 모델(`DevGridAPI`)은 직접 준비해야 합니다.
+- **DevExpress**: `DevGridAPI`, `TextToImg`, `SendImageViaPost`는 DevExpress WinForms 컨트롤(유료)을 사용하므로 빌드하려면 해당 버전(22.1 / 18.2)의 라이선스와 설치가 필요합니다.
 - **알려진 문제**
   - `MVTec/hw_6th_.../step3_evaluate.py`의 `MODEL_PATH`가 개인 PC의 절대 경로로 되어 있습니다.
   - `mimii/step4_inference_audio_ae.py`의 모델 정의(256×8×8)가 학습 모델(512 입력)과 달라 체크포인트 로드 시 크기 불일치가 납니다. `step3`의 재구성 시각화도 입력 크기가 256×256으로 되어 있어 같은 문제가 있습니다.
   - `mimii/step3`은 학습에 쓴 정상 파일 일부로 평가하므로 성능이 실제보다 높게 나올 수 있습니다.
+  - `TextToImg/Form1.cs`의 `DrawText`가 그리기 좌표(`width`, `height`)를 갱신하지 않아 모든 칸이 같은 위치에 겹쳐 그려집니다.
